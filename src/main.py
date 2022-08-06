@@ -1,8 +1,7 @@
-from __future__ import annotations
+import sys
 
 from listener import Listener
 
 
-def run():
-    # This function should run the listener
-    pass
+if __name__ == "__main__":
+    sys.exit(Listener())

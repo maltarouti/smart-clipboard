@@ -4,7 +4,7 @@ from view import View
 
 
 class Interpeter():
-    def __init__(self, view: View):
+    def __init__(self, view: View) -> None:
         self.view = view
         self.sequence = list()
 
