@@ -78,11 +78,11 @@ class View():
         self.copied_content.setText(
             _translate("main_window", "Copied Content"))
 
-    def pin() -> None:
+    def pin(self) -> None:
         pass
 
-    def clear_all() -> None:
+    def clear_all(self) -> None:
         pass
 
-    def close() -> None:
+    def close(self) -> None:
         pass
