@@ -14,13 +14,15 @@ class Interpeter():
         self.cache: set[Key | KeyCode] = set()
 
     def __process_sequence(self) -> None:
-        if len(self.cache) == 2:
-            if Key.cmd in self.cache and KeyCode.from_char('v') in self.cache:
+        if len(self.cache) == 3:
+            if (Key.alt in self.cache and Key.ctrl in self.cache
+                    and KeyCode.from_char('v') in self.cache):
+
                 self.view.show()
 
     def on_keyboard_press(self, key: Key | KeyCode | None) -> None:
-        if (Key.cmd in self.cache or Key.ctrl in self.cache
-                or key in [Key.cmd, Key.ctrl]):
+        if (Key.alt in self.cache or Key.ctrl in self.cache
+                or key == Key.alt or key == Key.ctrl):
 
             self.cache.add(key)
             self.__process_sequence()
@@ -37,6 +39,9 @@ class Interpeter():
         pass
 
     def add_element(self, text: str) -> None:
+        if len(self.sequence) == 20:
+            self.sequence.pop(-1)
+
         self.sequence.insert(0, text)
         self.view.refresh_clipboard(self.sequence)
 

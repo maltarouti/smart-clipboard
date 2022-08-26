@@ -14,7 +14,9 @@ class View():
         main_window.setMaximumSize(QtCore.QSize(340, 410))
 
         # Hide window bar
-        # main_window.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+        main_window.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint |
+                                   QtCore.Qt.WindowDoesNotAcceptFocus |
+                                   QtCore.Qt.CustomizeWindowHint)
 
         self.content = QtWidgets.QWidget(main_window)
         self.content.setObjectName("content")
@@ -87,6 +89,7 @@ class View():
 
     def refresh_clipboard(self, clipboard: list[str]) -> None:
         print(clipboard)
+        # TODO: Create a scrollable list
         self.copied_content.setText()
 
     def pin(self) -> None:
