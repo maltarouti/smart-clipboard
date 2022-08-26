@@ -1,17 +1,20 @@
 from __future__ import annotations
-from typing import Set
 
+from typing import List
+from typing import Set
 from PyQt5.QtWidgets import QMainWindow
 
 from pynput.keyboard import Key
 from pynput.keyboard import KeyCode
 from pynput.mouse import Button
 
+import pyperclip
+
 
 class Interpeter():
     def __init__(self, view: QMainWindow) -> None:
         self.view = view
-        print(type(self.view))
+        self.sequence: List[str] = list()
         self.cache: Set[Key | KeyCode] = set()
 
     def __process_sequence(self) -> None:
@@ -19,8 +22,11 @@ class Interpeter():
             if Key.cmd in self.cache and KeyCode.from_char('v') in self.cache:
                 self.view.show()
 
+            if Key.ctrl in self.cache and KeyCode.from_char('c') in self.cache:
+                self.add_element()
+
     def on_keyboard_press(self, key: Key | KeyCode | None) -> None:
-        if Key.cmd in self.cache or key == Key.cmd:
+        if Key.cmd in self.cache or Key.ctrl in self.cache or key == Key.cmd:
             self.cache.add(key)
             self.__process_sequence()
 
@@ -36,7 +42,7 @@ class Interpeter():
         pass
 
     def add_element(self) -> None:
-        pass
+        self.sequence.append(pyperclip.paste())
 
     def remove_element(self) -> None:
         pass
