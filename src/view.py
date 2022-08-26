@@ -7,6 +7,7 @@ from PyQt5 import QtWidgets
 
 class View():
     def __init__(self, main_window) -> None:
+        self.main_window = main_window
         main_window.setObjectName("main_window")
         main_window.resize(340, 410)
         main_window.setMinimumSize(QtCore.QSize(340, 410))
@@ -77,6 +78,16 @@ class View():
         self.clearall.setText(_translate("main_window", "Clear all"))
         self.copied_content.setText(
             _translate("main_window", "Copied Content"))
+
+    def show(self) -> None:
+        self.main_window.show()
+
+    def hide(self) -> None:
+        self.main_window.hide()
+
+    def refresh_clipboard(self, clipboard: list[str]) -> None:
+        print(clipboard)
+        self.copied_content.setText()
 
     def pin(self) -> None:
         pass
