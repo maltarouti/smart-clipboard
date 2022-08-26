@@ -13,7 +13,7 @@ class View():
         main_window.setMaximumSize(QtCore.QSize(340, 410))
 
         # Hide window bar
-        main_window.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+        # main_window.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
 
         self.content = QtWidgets.QWidget(main_window)
         self.content.setObjectName("content")
@@ -82,7 +82,4 @@ class View():
         pass
 
     def clear_all(self) -> None:
-        pass
-
-    def close(self) -> None:
         pass
