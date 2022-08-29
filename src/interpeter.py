@@ -36,7 +36,7 @@ class Interpeter():
                        y: int,
                        button: Button,
                        is_down: bool) -> None:
-        pass
+        self.view.hide()
 
     def add_element(self, text: str) -> None:
         if len(self.sequence) == 20:
