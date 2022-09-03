@@ -14,8 +14,7 @@ from pynput.mouse import Listener as mouse
 class Listener():
     def __init__(self) -> None:
         self.app = QtWidgets.QApplication(sys.argv)
-        self.main_window = QtWidgets.QMainWindow()
-        self.view = View(self.main_window)
+        self.view = View()
         self.intrepter = Interpeter(self.view)
 
         self.keyboard = keyboard(on_press=self.intrepter.on_keyboard_press,

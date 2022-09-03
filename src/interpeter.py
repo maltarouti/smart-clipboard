@@ -16,9 +16,9 @@ class Interpeter():
     def __process_sequence(self) -> None:
         if len(self.cache) == 3:
             if (Key.alt in self.cache and Key.ctrl in self.cache
-                    and KeyCode.from_char('v') in self.cache):
+                    and KeyCode.from_char('e') in self.cache):
 
-                self.view.show()
+                self.view.show_window()
 
     def on_keyboard_press(self, key: Key | KeyCode | None) -> None:
         if (Key.alt in self.cache or Key.ctrl in self.cache
@@ -36,7 +36,8 @@ class Interpeter():
                        y: int,
                        button: Button,
                        is_down: bool) -> None:
-        self.view.hide()
+        # self.view.hide_window()
+        pass
 
     def add_element(self, text: str) -> None:
         if len(self.sequence) == 20:
