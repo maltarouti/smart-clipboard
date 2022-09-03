@@ -5,6 +5,7 @@ from pynput.keyboard import Key
 from pynput.keyboard import Controller
 
 from PyQt5 import QtCore
+from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 
 KEYBOARD = Controller()
@@ -27,7 +28,7 @@ class Label(QtWidgets.QLabel):
 
         self.mousePressEvent = self.paste
 
-    def paste(self, event):
+    def paste(self, event: QtGui.QMouseEvent) -> None:
         pyperclip.copy(self.content)
         KEYBOARD.press(SHIFT_L)
         KEYBOARD.press(INSERT)
@@ -88,9 +89,3 @@ class View(QtWidgets.QMainWindow):
         for element in clipboard:
             label = Label(element)
             self.content.addWidget(label)
-
-        compressor = QtWidgets.QSpacerItem(20, 500,
-                                           QtWidgets.QSizePolicy.Expanding,
-                                           QtWidgets.QSizePolicy.Minimum)
-
-        self.content.addItem(compressor)
