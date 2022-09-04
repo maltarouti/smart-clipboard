@@ -9,9 +9,9 @@ from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 
 KEYBOARD = Controller()
+
 SHIFT_L = Key.shift_l
 INSERT = Key.insert
-
 MAX_PREVIEW = 50
 
 
@@ -21,7 +21,7 @@ class Label(QtWidgets.QLabel):
         super(QtWidgets.QLabel).__init__()
         self.content = text
 
-        text = text.strip()
+        text = text.strip().replace("\n", " ")
         if len(text) > MAX_PREVIEW:
             text = text[:MAX_PREVIEW] + "..."
         self.setText(text)
@@ -75,7 +75,7 @@ class View(QtWidgets.QMainWindow):
         while self.content.count():
             item = self.content.takeAt(0)
             self.content.removeItem(item)
-            item.widget().close()
+            item.widget().deleteLater()
 
     def show_window(self) -> None:
         self.show()

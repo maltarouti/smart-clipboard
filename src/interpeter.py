@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from view import View
 
+from PyQt5 import QtCore
 from pynput.keyboard import Key
 from pynput.keyboard import KeyCode
 from pynput.mouse import Button
@@ -12,6 +13,11 @@ class Interpeter():
         self.view = view
         self.sequence: list[str] = list()
         self.cache: set[Key | KeyCode] = set()
+
+    def __sleep(self, duration: int) -> None:
+        loop = QtCore.QEventLoop()
+        QtCore.QTimer.singleShot(duration, loop.quit)
+        loop.exec_()
 
     def __process_sequence(self) -> None:
         if len(self.cache) == 3:
@@ -36,8 +42,10 @@ class Interpeter():
                        y: int,
                        button: Button,
                        is_down: bool) -> None:
-        # self.view.hide_window()
-        pass
+
+        if is_down:
+            self.__sleep(100)
+            self.view.hide_window()
 
     def add_element(self, text: str) -> None:
         if len(self.sequence) == 20:
