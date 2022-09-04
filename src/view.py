@@ -40,20 +40,20 @@ class Label(QtWidgets.QLabel):
 class View(QtWidgets.QMainWindow):
     def __init__(self) -> None:
         super().__init__()
+        self.setWindowTitle("Smart Clipboard")
         self.setObjectName("main_window")
         self.resize(400, 400)
         self.setMinimumSize(QtCore.QSize(400, 400))
         self.setMaximumSize(QtCore.QSize(400, 400))
 
-        # Hide window bar
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint |
-                            QtCore.Qt.WindowDoesNotAcceptFocus)
+                            QtCore.Qt.WindowDoesNotAcceptFocus |
+                            QtCore.Qt.Tool)
 
         self.init()
 
     def init(self) -> None:
         self.widget = QtWidgets.QWidget()
-
         self.container = QtWidgets.QVBoxLayout(self.widget)
         self.widget.setLayout(self.container)
 
@@ -68,7 +68,6 @@ class View(QtWidgets.QMainWindow):
 
         self.container.addItem(compressor)
 
-        self.setWindowTitle("Smart Clipboard")
         self.setCentralWidget(self.widget)
         self.setGeometry(600, 100, 1000, 900)
 
@@ -76,6 +75,7 @@ class View(QtWidgets.QMainWindow):
         while self.content.count():
             item = self.content.takeAt(0)
             self.content.removeItem(item)
+            item.widget().close()
 
     def show_window(self) -> None:
         self.show()
