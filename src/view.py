@@ -12,7 +12,7 @@ KEYBOARD = Controller()
 
 SHIFT_L = Key.shift_l
 INSERT = Key.insert
-MAX_PREVIEW = 50
+MAX_PREVIEW = 60
 
 
 class Label(QtWidgets.QLabel):
@@ -21,12 +21,22 @@ class Label(QtWidgets.QLabel):
         super(QtWidgets.QLabel).__init__()
         self.content = text
 
-        text = text.strip().replace("\n", " ")
+        text = text.strip().replace("\n", "").replace("\t", "")
+
         if len(text) > MAX_PREVIEW:
             text = text[:MAX_PREVIEW] + "..."
         self.setText(text)
 
         self.mousePressEvent = self.paste
+        self.setStyleSheet("""
+                           QLabel::hover{
+                                border: 3px;
+                                border-style: solid;
+                                border-color : lightblue;
+                                background: lightblue;
+                                border-radius: 25px;
+                            }
+                           """)
 
     def paste(self, event: QtGui.QMouseEvent) -> None:
         pyperclip.copy(self.content)
@@ -50,6 +60,7 @@ class View(QtWidgets.QMainWindow):
                             QtCore.Qt.WindowDoesNotAcceptFocus |
                             QtCore.Qt.Tool)
 
+        self.cursor = QtGui.QCursor()
         self.init()
 
     def init(self) -> None:
@@ -63,8 +74,8 @@ class View(QtWidgets.QMainWindow):
 
         # Compress them
         compressor = QtWidgets.QSpacerItem(20, 500,
-                                           QtWidgets.QSizePolicy.Expanding,
-                                           QtWidgets.QSizePolicy.Minimum)
+                                           QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
 
         self.container.addItem(compressor)
 
@@ -78,6 +89,9 @@ class View(QtWidgets.QMainWindow):
             item.widget().deleteLater()
 
     def show_window(self) -> None:
+        x = self.cursor.pos().x()
+        y = self.cursor.pos().y()
+        self.move(x, y)
         self.show()
 
     def hide_window(self) -> None:

@@ -7,6 +7,8 @@ from pynput.keyboard import Key
 from pynput.keyboard import KeyCode
 from pynput.mouse import Button
 
+MAX_CLIPBOARD_SIZE = 20
+
 
 class Interpeter():
     def __init__(self, view: View) -> None:
@@ -42,26 +44,19 @@ class Interpeter():
                        y: int,
                        button: Button,
                        is_down: bool) -> None:
-
         if is_down:
-            self.__sleep(100)
+            self.__sleep(1)
             self.view.hide_window()
 
+    def remove_element(self, text: str = None) -> None:
+        if text in self.sequence:
+            self.sequence.remove(text)
+
     def add_element(self, text: str) -> None:
-        if len(self.sequence) == 20:
+        self.remove_element(text)
+
+        if len(self.sequence) == MAX_CLIPBOARD_SIZE:
             self.sequence.pop(-1)
 
         self.sequence.insert(0, text)
         self.view.refresh_clipboard(self.sequence)
-
-    def remove_element(self) -> None:
-        pass
-
-    def next_element(self) -> None:
-        pass
-
-    def previous_element(self) -> None:
-        pass
-
-    def select_element(self) -> None:
-        pass
